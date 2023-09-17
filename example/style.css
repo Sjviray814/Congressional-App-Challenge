@@ -1,0 +1,50 @@
+/* Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto+Slab:wght@400&display=swap');
+
+body { 
+    margin:0; 
+    padding:0; 
+}
+
+*{
+    font-family: 'Roboto Slab', serif;
+}
+
+#map { position:absolute; top:0; bottom:0; width:50%; }
+
+/* INTERACTIVE MENU */
+#menu {
+    position:absolute;
+    top:10px;
+    left:10px;
+    background-color: white;
+    margin-right: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    border: rgb(221, 221, 221);
+    box-shadow: 0px 0px 0px 2px rgb(221, 221, 221);
+    color: #222;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+.selector { display: inline-block; float: left; margin: 4px; }
+
+.infoStuff{
+    position: absolute;
+    left: 50%;
+    max-width: calc(50%-40px);
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+}
+
+.districtInsights{
+    font-family: 'Oswald', sans-serif;
+    color: blue;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.hidden{
+    display: none;
+}
