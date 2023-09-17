@@ -81,13 +81,43 @@ function uspsToFips(uspsAbbreviation) {
   }
 }
 
+function hideIntro(){
+  const allElements = document.querySelectorAll('.content');
+  allElements.forEach((element) => {
+    element.classList.remove('hidden');
+  });
+
+  // Add the 'hidden' class to the element(s) with the class 'districtInsights'
+  const districtInsightsElements = document.querySelectorAll('.districtInsights');
+  districtInsightsElements.forEach((element) => {
+    element.classList.add('hidden');
+  });
+}
+
+function showIntro(){
+  const allElements = document.querySelectorAll('.districtInsights');
+  allElements.forEach((element) => {
+    element.classList.remove('hidden');
+  });
+
+  // Add the 'hidden' class to the element(s) with the class 'districtInsights'
+  const districtInsightsElements = document.querySelectorAll('.content');
+  districtInsightsElements.forEach((element) => {
+    element.classList.add('hidden');
+});
+}
+
 
 let currentState = '';
 let currentDistrict = '';
 
 
 function loadData(){
-  if(!myMap.has(currentDistrict)) return;
+  if(!myMap.has(currentDistrict)) {
+    showIntro();
+    return;
+  }
+  hideIntro();
   let districtData = myMap.get(currentDistrict);
   // console.log(Object.keys(districtData))
 }
@@ -145,7 +175,10 @@ stateList.map(function(d) {
 //** INTERACTIVE MENU
 // Create an event listener that responds to the selection of a state from the menu
 $('#state').change(function() {
-  if (this.value === '' || this.value === 'United States') { window.location.hash = '#' }
+  if (this.value === '' || this.value === 'United States') { 
+    window.location.hash = '#' 
+    hideIntro();
+  }
   else {
     var hash = window.location.hash;
     var newHash = 'state=' + this.value;
@@ -290,6 +323,7 @@ if (mapboxgl.supported({ failIfMajorPerformanceCaveat: true })) {
           //** INTERACTIVE MENU
           // Empty the list of districts because no state is selected
           $('#district').empty();
+          showIntro();
         }
       }
     }

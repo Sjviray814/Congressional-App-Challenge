@@ -7,7 +7,7 @@ body {
     padding:0; 
 }
 
-*{
+.content{
     font-family: 'Roboto Slab', serif;
 }
 
@@ -25,7 +25,11 @@ body {
     border: rgb(221, 221, 221);
     box-shadow: 0px 0px 0px 2px rgb(221, 221, 221);
     color: #222;
-    font-family: 'Open Sans', Arial, sans-serif;
+    font-family: 'Roboto Slab', serif;
+}
+
+option, select{
+    font-family: 'Roboto Slab', serif;
 }
 .selector { display: inline-block; float: left; margin: 4px; }
 
