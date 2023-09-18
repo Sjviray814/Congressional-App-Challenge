@@ -56,4 +56,22 @@ option, select{
 .header{
     font-family: 'Oswald', sans-serif;
     color: blue;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+    padding-top:5rem;
+    font-size: default;
+    line-height: default
+}
+#firstHeader {
+    padding-top: 0; /* Reset the padding for the first element */
+}
+
+.representativeInfo {
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+.laborInfo :not(.header){
+    font-size: 1.2rem;
+    line-height: 1.4;
 }

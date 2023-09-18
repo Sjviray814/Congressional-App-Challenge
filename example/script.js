@@ -1,3 +1,18 @@
+function insertPieChart(div, values, labels){
+  let data = [{
+    values: values,
+    labels: labels,
+    type: 'pie'
+  }];
+
+  let layout = {
+    height: 400,
+    width: 500
+  }
+
+  Plotly.newPlot(document.getElementById(div), data, layout);
+}
+
 function uspsToFips(uspsAbbreviation) {
     // Find the state object with the given USPS abbreviation
     const state = states.find((state) => state.USPS === uspsAbbreviation);
@@ -22,6 +37,18 @@ function uspsToFips(uspsAbbreviation) {
       // Handle the case where the FIPS code is not found
       return fipsCode;
     }
+  }
+
+  function isLastCharacterInteger(str) {
+    const lastChar = str.charAt(str.length - 1); // Get the last character
+    return Number.isInteger(Number(lastChar));
+  }
+
+  function convertState(state){
+    if(isLastCharacterInteger(state)){ // if the last character in the string is an integer
+        return fipsToUsps(parseInt(state))
+    }
+    return state;
   }
   
   function hideIntro(){
@@ -96,7 +123,7 @@ function setHtml(id, html){
   
   
   function loadData(){
-    console.log(currentState, currentDistrict, typeof currentDistrict)
+    console.log((currentState))
     if(!myMap.has(currentDistrict)) {
       showIntro();
       return;
@@ -104,24 +131,36 @@ function setHtml(id, html){
     hideIntro();
     let districtData = myMap.get(currentDistrict);
     
-    if(Object.keys(districtData).length < 10){
+    if(Object.keys(districtData).length < 10){ // If the district only has info on the representative in the district
         setHtml('representative', getValueAtIndex(districtData, 0))
         setHtml('representativeParty', getValueAtIndex(districtData, 1))
         setHtml('representativeExperience', getValueAtIndex(districtData, 2))
         setHtml('representativeCollege', getValueAtIndex(districtData, 3))
         setHtml('representativeOffice', getValueAtIndex(districtData, 4))
-        setHtml('representativeReside', getValueAtIndex(districtData, 5) + ', ' + fipsToUsps(currentState))
+        setHtml('representativeReside', getValueAtIndex(districtData, 5) + ', ' + convertState(currentState))
         setHtml('representativeBirth', getValueAtIndex(districtData, 6))
+        document.getElementById('everythingElse').classList.add('hidden')
         return;
     }
 
+    // Representative Info
+    document.getElementById('everythingElse').classList.remove('hidden')
     setHtml('representative', getValueAtIndex(districtData, 37))
     setHtml('representativeParty', getValueAtIndex(districtData, 38))
     setHtml('representativeExperience', getValueAtIndex(districtData, 39))
     setHtml('representativeCollege', getValueAtIndex(districtData, 40))
     setHtml('representativeOffice', getValueAtIndex(districtData, 41))
-    setHtml('representativeReside', getValueAtIndex(districtData, 42) + ', ' + fipsToUsps(currentState))
+    setHtml('representativeReside', getValueAtIndex(districtData, 42) + ', ' + convertState(currentState))
     setHtml('representativeBirth', getValueAtIndex(districtData, 43))
+
+
+    // Labor Info:
+    setHtml('laborForce', `Approximately ${getValueAtIndex(districtData, 5)} people are in the labor force in this district, or about ${Math.round(getValueAtIndex(districtData, 5)*100/getValueAtIndex(districtData, 4))}% of eligible people`)
+    setHtml('armedForce', `Approximately ${getValueAtIndex(districtData, 6)} people are in the armed forces in this district, or about ${Math.round(getValueAtIndex(districtData, 6)*10000/getValueAtIndex(districtData, 4))/100}% of eligible people`)
+    setHtml('workFromHome', `Approximately ${getValueAtIndex(districtData, 7)} people in this district work from home, or about  ${Math.round(getValueAtIndex(districtData, 7)*1000/getValueAtIndex(districtData, 5))/10}% of working people`)
+
+
+    // Economic Info:
   }
   
   console.log(Object.keys(transformObjectKeys(myMap.get('3618'))))
