@@ -52,3 +52,8 @@ option, select{
 .hidden{
     display: none;
 }
+
+.header{
+    font-family: 'Oswald', sans-serif;
+    color: blue;
+}
