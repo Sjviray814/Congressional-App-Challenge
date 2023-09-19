@@ -170,6 +170,7 @@ function setHtml(id, html){
     // Labor Info:
     setHtml('laborForce', `Approximately ${getValueAtIndex(districtData, 5)} people are in the labor force in this district, or about ${Math.round(getValueAtIndex(districtData, 5)*100/getValueAtIndex(districtData, 4))}% of eligible people`)
     setHtml('armedForce', `Approximately ${getValueAtIndex(districtData, 6)} people are in the armed forces in this district, or about ${Math.round(getValueAtIndex(districtData, 6)*10000/getValueAtIndex(districtData, 4))/100}% of eligible people`)
+    setHtml('veterans', `Approximately ${getValueAtIndex(districtData, 125)} people are veterans in this district, or about ${Math.round(getValueAtIndex(districtData, 125)*10000/getValueAtIndex(districtData, 124))/100}% of eligible people`)
     setHtml('workFromHome', `Approximately ${getValueAtIndex(districtData, 7)} people in this district work from home, or about  ${Math.round(getValueAtIndex(districtData, 7)*1000/getValueAtIndex(districtData, 5))/10}% of working people`)
 
 
@@ -190,6 +191,19 @@ function setHtml(id, html){
     setHtml('medianRent', `The median rent cost in this area is $${getValueAtIndex(districtData, 74)}`)
     insertPieChart('rentPriceChart', valuesFromRange(districtData, 67, 73), ['Less than $500', '$500 to $999', '$1,000 to 1,499', '$1,500 to  $1,999', '$2,000 to $2,499', '$2,500 to $2,999', '$3,000 or More'])
     insertPieChart('fuelChart', valuesFromRange(districtData, 77, 85), ['Utility Gas', 'Bottled, Tank or LP Gas', 'Electricity', 'Fuel Oil or Kerosene', 'Coal or Coke', 'Wood', 'Solar Energy', 'Other Fuel', 'No Fuel Used'])
+ 
+    
+    // Social Info
+    setHtml('householdSize', `The average household size in this area is ${getValueAtIndex(districtData, 95)} people`)
+    setHtml('familySize', `The average family size in this area is ${getValueAtIndex(districtData, 96)} people`)
+    insertPieChart('maleMarriageChart', valuesFromRange(districtData, 98, 102), ['Never Married', 'Now Married, Together', 'Separated', 'Widowed', 'Divorced'])
+    
+
+    let womenValues = valuesFromRange(districtData, 104, 107)
+    womenValues.push(parseInt(getValueAtIndex(districtData, 103)) - parseInt(getValueAtIndex(districtData, 104)) - parseInt(getValueAtIndex(districtData, 105)) - parseInt(getValueAtIndex(districtData, 106)) - parseInt(getValueAtIndex(districtData, 107)))
+    insertPieChart('femaleMarriageChart', womenValues, ['Never Married', 'Now Married, Together', 'Separated', 'Widowed', 'Divorced'])
+
+    insertPieChart('immigrationChart', [getValueAtIndex(districtData, 127), parseInt(getValueAtIndex(districtData, 126)) - parseInt(getValueAtIndex(districtData, 127))], ['Born in the United States', 'Foreign Born'])
   }
   
   console.log(Object.keys(transformObjectKeys(myMap.get('0101'))))
