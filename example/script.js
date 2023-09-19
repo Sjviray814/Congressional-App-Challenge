@@ -131,7 +131,7 @@ function setHtml(id, html){
   
   
   function loadData(){
-    console.log((currentState))
+    console.log((currentDistrict))
     if(!myMap.has(currentDistrict)) {
       showIntro();
       return;
@@ -139,20 +139,25 @@ function setHtml(id, html){
     hideIntro();
     let districtData = myMap.get(currentDistrict);
     
-    if(Object.keys(districtData).length < 10){ // If the district only has info on the representative in the district
-        setHtml('representative', getValueAtIndex(districtData, 0))
-        setHtml('representativeParty', getValueAtIndex(districtData, 1))
-        setHtml('representativeExperience', getValueAtIndex(districtData, 2))
-        setHtml('representativeCollege', getValueAtIndex(districtData, 3))
-        setHtml('representativeOffice', getValueAtIndex(districtData, 4))
-        setHtml('representativeReside', getValueAtIndex(districtData, 5) + ', ' + convertState(currentState))
-        setHtml('representativeBirth', getValueAtIndex(districtData, 6))
+    if(Object.keys(districtData).length < 130){ // If the district only has info on the representative in the district
+        // setHtml('representative', getValueAtIndex(districtData, 0))
+        // setHtml('representativeParty', getValueAtIndex(districtData, 1))
+        // setHtml('representativeExperience', getValueAtIndex(districtData, 2))
+        // setHtml('representativeCollege', getValueAtIndex(districtData, 3))
+        // setHtml('representativeOffice', getValueAtIndex(districtData, 4))
+        // setHtml('representativeReside', getValueAtIndex(districtData, 5) + ', ' + convertState(currentState))
+        // setHtml('representativeBirth', getValueAtIndex(districtData, 6))
+        document.getElementById('noInfo').style.display = 'block'
+        document.getElementById('noInfo').innerHTML = 'Unfortunately, we do not have any information on this district'
         document.getElementById('everythingElse').classList.add('hidden')
+        document.getElementById('representativeInfo').classList.add('hidden')
         return;
     }
 
     // Representative Info
     document.getElementById('everythingElse').classList.remove('hidden')
+    document.getElementById('representativeInfo').classList.remove('hidden')
+    document.getElementById('noInfo').style.display = 'none'
     setHtml('representative', getValueAtIndex(districtData, 37))
     setHtml('representativeParty', getValueAtIndex(districtData, 38))
     setHtml('representativeExperience', getValueAtIndex(districtData, 39))
@@ -175,10 +180,20 @@ function setHtml(id, html){
     setHtml('poverty', `Approximately ${getValueAtIndex(districtData, 36)}% of families in this district are below the poverty line`)
     insertPieChart('industryChart', valuesFromRange(districtData, 9, 21), ['Agriculture, Forestry, Fishing, Hunting, and Mining', 'Construction', 'Manufacturing', 'Wholesale Trade', 'Retail Trade', 'Transportation, Warehousing and Utilities', 'Information', 'Finance, Insurance and Real Estate', 'Professional, Scientific and Management', 'Educational Services and Healthcare', 'Arts, Entertainment, Recreation and Food Services', 'Other Services', 'Public Administration'])
     insertPieChart('incomeChart', valuesFromRange(districtData, 23, 32), ['Less than $10,000', '$10,000 to $14,999', '$15,000 to $24,999', '$25,000 to $34,999', '$35,000 to $49,999', '$50,000 to $74,999', '$75,000 to $99,999', '$100,000 to $149,999', '$150,000 to $199,999', '$200,000 or more'])
+
+
+    // Housing Info:
+    insertPieChart('occupiedChart', [getValueAtIndex(districtData, 45), parseInt(getValueAtIndex(districtData, 44)) - parseInt(getValueAtIndex(districtData, 45))], ['Occupied', 'Unoccupied'])
+    insertPieChart('buildYearChart', valuesFromRange(districtData, 46, 55), ['2020 or Later', '2010 to 2019', '2000 to 2009', '1990 to 1999', '1980 to 1989', '1970 to 1979', '1960 to 1969', '1950 to 1959', '1940 to 1949', '1939 or Earlier'])
+    setHtml('medianHomePrice', `The median owner-occupied home price in this area is $${getValueAtIndex(districtData, 65)}`)
+    insertPieChart('homePriceChart', valuesFromRange(districtData, 57, 64), ['Less than $50,000', '$50,000 to $99,999', '$100,000 to $149,999', '$150,000 to $199,999', '$200,000 to $299,999', '$300,000 to $499,999', '$500,000 to $999,999', '$1,000,000 or More'])
+    setHtml('medianRent', `The median rent cost in this area is $${getValueAtIndex(districtData, 74)}`)
+    insertPieChart('rentPriceChart', valuesFromRange(districtData, 67, 73), ['Less than $500', '$500 to $999', '$1,000 to 1,499', '$1,500 to  $1,999', '$2,000 to $2,499', '$2,500 to $2,999', '$3,000 or More'])
+    insertPieChart('fuelChart', valuesFromRange(districtData, 77, 85), ['Utility Gas', 'Bottled, Tank or LP Gas', 'Electricity', 'Fuel Oil or Kerosene', 'Coal or Coke', 'Wood', 'Solar Energy', 'Other Fuel', 'No Fuel Used'])
   }
   
-  console.log(Object.keys(transformObjectKeys(myMap.get('3618'))))
-  console.log(getValueAtIndex(myMap.get('3618'), 2));
+  console.log(Object.keys(transformObjectKeys(myMap.get('0101'))))
+
   
   //** MODIFY THIS SECTION
   // Specify YOUR Mapbox default access token
