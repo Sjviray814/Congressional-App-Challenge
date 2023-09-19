@@ -6,11 +6,19 @@ function insertPieChart(div, values, labels){
   }];
 
   let layout = {
-    height: 400,
-    width: 500
+    height: '100%',
+    width: '70%'
   }
 
   Plotly.newPlot(document.getElementById(div), data, layout);
+}
+
+function valuesFromRange(object, start, end){
+  let values = [];
+  for(let i = start; i <= end; i++){
+    values.push(getValueAtIndex(object, i))
+  }
+  return values;
 }
 
 function uspsToFips(uspsAbbreviation) {
@@ -23,7 +31,7 @@ function uspsToFips(uspsAbbreviation) {
       return paddedFIPS;
     } else {
       // Handle the case where the USPS abbreviation is not found
-      return null;
+      return uspsAbbreviation;
     }
   }
 
@@ -161,6 +169,12 @@ function setHtml(id, html){
 
 
     // Economic Info:
+    setHtml('medianIncome', `The median household income in this district is $${getValueAtIndex(districtData, 33)}`)
+    setHtml('meanIncome', `The mean household income in this district is $${getValueAtIndex(districtData, 34)}`)
+    setHtml('perCapitaIncome', `The average income per capita in this district is $${getValueAtIndex(districtData, 35)}`)
+    setHtml('poverty', `Approximately ${getValueAtIndex(districtData, 36)}% of families in this district are below the poverty line`)
+    insertPieChart('industryChart', valuesFromRange(districtData, 9, 21), ['Agriculture, Forestry, Fishing, Hunting, and Mining', 'Construction', 'Manufacturing', 'Wholesale Trade', 'Retail Trade', 'Transportation, Warehousing and Utilities', 'Information', 'Finance, Insurance and Real Estate', 'Professional, Scientific and Management', 'Educational Services and Healthcare', 'Arts, Entertainment, Recreation and Food Services', 'Other Services', 'Public Administration'])
+    insertPieChart('incomeChart', valuesFromRange(districtData, 23, 32), ['Less than $10,000', '$10,000 to $14,999', '$15,000 to $24,999', '$25,000 to $34,999', '$35,000 to $49,999', '$50,000 to $74,999', '$75,000 to $99,999', '$100,000 to $149,999', '$150,000 to $199,999', '$200,000 or more'])
   }
   
   console.log(Object.keys(transformObjectKeys(myMap.get('3618'))))

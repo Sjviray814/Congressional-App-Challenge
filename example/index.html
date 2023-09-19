@@ -22,6 +22,9 @@
 
     <link rel="shortcut icon" href="../favicon.png" type="image/x-icon">
 
+    <!-- Plotly -->
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" charset="utf-8"></script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -75,10 +78,31 @@
 
 
 
-          <div class="economicInfo">
-            <div class="header">Economic Information</div>
-            <div id="industryChart"></div>
-          </div>
+        <div class="economicInfo">
+
+          <div class="header">Economic Information</div>
+
+          <div id="medianIncome"></div>
+          <div id="meanIncome"></div>
+          <div id="perCapitaIncome"></div>
+          <div id="poverty"></div>
+
+          <div id="subheader">Industry Data:</div>
+          <div id="industryChart"></div>
+
+          <div id="subheader">Income Data (Per Household)</div>
+          <div id="incomeChart"></div>
+        </div>
+
+
+        <div class="housingInfo">
+          <div class="header">Housing Information</div>
+
+          <div id="subheader">Occupied vs. Unoccupied Housing Units:</div>
+          <div id="occupiedChart"></div>
+
+
+        </div>
 
       </div>
 
