@@ -13,6 +13,10 @@ function insertPieChart(div, values, labels){
   Plotly.newPlot(document.getElementById(div), data, layout);
 }
 
+function getPercentage(object, part, whole){
+  return(Math.round(parseInt(getValueAtIndex(object, part))/parseInt(getValueAtIndex(object, whole))*1000)/10)
+}
+
 function valuesFromRange(object, start, end){
   let values = [];
   for(let i = start; i <= end; i++){
@@ -204,6 +208,16 @@ function setHtml(id, html){
     insertPieChart('femaleMarriageChart', womenValues, ['Never Married', 'Now Married, Together', 'Separated', 'Widowed', 'Divorced'])
 
     insertPieChart('immigrationChart', [getValueAtIndex(districtData, 127), parseInt(getValueAtIndex(districtData, 126)) - parseInt(getValueAtIndex(districtData, 127))], ['Born in the United States', 'Foreign Born'])
+
+
+    // Education Info
+    insertPieChart('enrollmentChart', valuesFromRange(districtData, 109, 113), ['Nursery School', 'Kindergarten', 'Elementary School', 'High School', 'College or Graduate School'])
+    insertPieChart('attainmentChart', valuesFromRange(districtData, 115, 121), ['Less than 9th Grade', '9th to 12th Grade, no Diploma', 'High School Graduate', 'Some College, no Degree', 'Associate\'s degree', 'Bachelor\'s Degree', 'Graduate or Professional Degree'])
+
+    setHtml('highSchoolDiploma', `Approximately ${getPercentage(districtData, 122, 114)}% of people 25 years old or older have a high school diploma`)
+    setHtml('collegeDegree', `Approximately ${getPercentage(districtData, 123, 114)}% of people 25 years old or older have a college degree`)
+    setHtml('computer', `Approximately ${getPercentage(districtData, 129, 128)}% of households have access to a computer at home`)
+    setHtml('internet', `Approximately ${getPercentage(districtData, 130, 128)}% of households have access to internet at home`)
   }
   
   console.log(Object.keys(transformObjectKeys(myMap.get('0101'))))
